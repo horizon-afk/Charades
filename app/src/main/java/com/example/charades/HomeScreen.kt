@@ -35,9 +35,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(controller: NavHostController) {
+    var text by remember { mutableStateOf(TextFieldValue("")) }
     Scaffold { innerPadding ->
         Column(
             modifier = Modifier
@@ -56,7 +58,6 @@ fun HomeScreen() {
                     .border(2.dp, Color(0xFF2196F3), shape = RoundedCornerShape(12.dp)),
                 contentAlignment = Alignment.Center
             ) {
-                var name by remember { mutableStateOf(TextFieldValue("")) }
                 BasicTextField(
                     cursorBrush = SolidColor(LocalContentColor.current),
                     textStyle = TextStyle.Default.copy(
@@ -64,13 +65,12 @@ fun HomeScreen() {
                         fontSize = 28.sp,
                         color = LocalContentColor.current
                     ),
-                    value = name,
+                    value = text,
                     onValueChange = {
                         val maxLength = 80
-                        if (it.text.length <= maxLength) name = it
+                        if (it.text.length <= maxLength) text = it
                     },
                 )
-
             }
             Box(modifier = Modifier.padding(12.dp)) {
                 Button(
@@ -78,8 +78,9 @@ fun HomeScreen() {
                     modifier = Modifier.size(75.dp),
                     colors = buttonColors(Color(0xFF2196F3)),
                     contentPadding = PaddingValues(0.dp),
-                    onClick = {}
-
+                    onClick = {
+                        controller.navigate(route = "Banner/${text.text}")
+                    }
                 ) {
                     Icon(
                         Icons.Default.PlayArrow,
