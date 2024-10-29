@@ -9,6 +9,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -24,6 +27,11 @@ class MainActivity : ComponentActivity() {
                 val context = LocalContext.current
                 val activity = context as Activity
 
+
+                val view = LocalView.current
+                val window = (view.context as Activity).window
+                val insetsController = WindowCompat.getInsetsController(window, view)
+
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "Home") {
                     composable("Home") {
@@ -31,6 +39,7 @@ class MainActivity : ComponentActivity() {
                         HomeScreen(navController)
                     }
                     composable("Banner" + "/{text}") {navBackStack ->
+                        insetsController.apply { hide(WindowInsetsCompat.Type.systemBars()) }
                         activity.requestedOrientation = SCREEN_ORIENTATION_SENSOR_LANDSCAPE
                         val text = navBackStack.arguments?.getString("text")
                         BannerScreen(text = text)
