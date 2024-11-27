@@ -67,7 +67,7 @@ fun HomeScreen(controller: NavHostController) {
                     ),
                     value = text,
                     onValueChange = {
-                        val maxLength = 80
+                        val maxLength = 50
                         if (it.text.length <= maxLength) text = it
                     },
                 )
