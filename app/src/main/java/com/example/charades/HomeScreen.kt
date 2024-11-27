@@ -88,11 +88,8 @@ fun HomeScreen(controller: NavHostController) {
                         modifier = Modifier.size(50.dp),
                         tint = Color(0xFFFFFFFF)
                     )
-
                 }
             }
-
-
         }
     }
 }

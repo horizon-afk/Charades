@@ -44,7 +44,6 @@ class MainActivity : ComponentActivity() {
                         val text = navBackStack.arguments?.getString("text")
                         BannerScreen(text = text)
                     }
-
                 }
             }
         }
